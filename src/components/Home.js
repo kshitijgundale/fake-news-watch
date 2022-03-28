@@ -1,5 +1,6 @@
 import React from "react";
 import {Container, Row, Col, Button} from "react-bootstrap"
+import {Link} from 'react-router-dom'
 import worldMap from "../../src/world-map.png";
 
 import Title from "./Title";
@@ -23,9 +24,9 @@ const Home = () => (
           <Title fontSize="100px" color="blue">atch</Title>
         </Col>
       </Row>
-      <Button variant="dark" size="lg">
-        START
-      </Button>
+      <Link to="/main" style={{ textDecoration:'none', color:"white" }}>
+        <Button variant="dark" size="lg">START</Button>
+      </Link>
     </Container>
 );
 

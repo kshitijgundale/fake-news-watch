@@ -1,19 +1,9 @@
 import React from "react";
-import { Row, Col, Button} from "react-bootstrap"
+import { Row, Button} from "react-bootstrap"
+import {Link} from "react-router-dom"
 import NavBar from "./NavBar"
-import styled from "styled-components";
 import news from "../../src/news.jpeg"
-
-const MainCol = styled(Col)`
-    color: white;
-    text-align: center;
-    min-height: 50vh;
-    border-bottom: 3px solid;
-    @media (min-width: 992px){
-        border-bottom: 0px solid;
-        border-right: 3px solid;
-    }
-`
+import MainCol from "./MainCol"
 
 const Main = () => (
     <div className="d-flex flex-column vh-100">
@@ -24,9 +14,9 @@ const Main = () => (
       >
         <MainCol className="d-flex flex-column p-0 justify-content-center align-items-center" lg>
             <h2>Check veracity of news<br></br>with headline or a url</h2>
-            <Button variant="outline-light" size="lg">
-              Go
-            </Button>
+            <Link to="/newsinput" style={{ textDecoration:'none', color:"white" }}>
+              <Button variant="outline-light" size="lg">Go</Button>
+            </Link>
         </MainCol>
         <MainCol className="d-flex flex-column p-0 justify-content-center align-items-center" lg>
             <h2>How it works</h2>

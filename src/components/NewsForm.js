@@ -1,12 +1,9 @@
-import {React, useState} from "react";
-import styled from "styled-components";
-import {Form, Button} from 'react-bootstrap'
+import {React} from "react";
+import {Form, Button, Row} from 'react-bootstrap'
+import NavBar from "./NavBar"
+import MainCol from "./MainCol";
 
-var id = 0
-
-const NewsForm = () => {
-
-    const [inputFields, setInputFields] = useState([{id:id, text:""}])
+const NewsForm = ({inputFields, setInputFields, setCurrentPage, id, setId}) => {
 
     const handleFormChange = (id, event) => {
         let data = [...inputFields]
@@ -20,8 +17,9 @@ const NewsForm = () => {
     }
 
     const addFields = () => {
-        id = id + 1
-        let newfield = { id: id, text: '' }
+        let new_id = id+1
+        setId(new_id)
+        let newfield = { id: new_id, text: '' }
         setInputFields([...inputFields, newfield])
     }
 
@@ -31,33 +29,54 @@ const NewsForm = () => {
         data.splice(index, 1)
         setInputFields(data)
     }
-    
-    return (
-        <Form>
-            {
-                inputFields.map(({id, text})=>(
-                    <Form.Group className="mb-3" controlId="news" key={id}>
-                        <Form.Control 
-                            type="text" 
-                            placeholder="Enter url or headline" 
-                            value={text} 
-                            onChange={event => handleFormChange(id, event)}
-                        />
-                        <Button variant="dark" size="sm" onClick={event => removeFields(id)}>
-                            Remove
-                        </Button>
-                    </Form.Group>
-                ))
-            }
 
-            <Button variant="dark" size="lg" onClick={addFields}>
-                Add
-            </Button>
+    const onSubmit = (event) => {
+        event.preventDefault()
+        setCurrentPage("NewsChoice")
+    }
+
+    return (
+        <div className="d-flex flex-column vh-100">
+            <Row><NavBar></NavBar></Row>
             
-            <Button variant="primary" type="submit">
-                Submit
-            </Button>
-        </Form>
+            <Row
+                className="d-flex justify-content-center align-items-center h-100"
+            >
+                <MainCol className="d-flex flex-column p-0 justify-content-center align-items-center" lg>
+                    <h3 style={{paddingRight: "50px", paddingLeft: "50px", paddingBottom: "20px"}}>
+                        Add headline or URL of news you would like to verify. Any URL mentioning the news is valid e.g.(news article, facebook post, youtube videos)
+                    </h3>
+                </MainCol>
+                <MainCol className="d-flex flex-column p-0 justify-content-center align-items-center" lg>
+                    <Form className="w-100" onSubmit={event => onSubmit(event)}>
+                        {
+                            inputFields.map(({id, text})=>(
+                                <Form.Group className=" d-flex mb-3 justify-content-center align-items-center" controlId="news" key={id}>
+                                    <Form.Control 
+                                        className="m-1 w-50"
+                                        type="text" 
+                                        placeholder="Enter url or headline" 
+                                        value={text} 
+                                        onChange={event => handleFormChange(id, event)}
+                                    />
+                                    <Button className="m-1" variant="danger" size="sm" onClick={event => removeFields(id)}>
+                                        Remove
+                                    </Button>
+                                </Form.Group>
+                            ))
+                        }
+
+                        <Button variant="outline-light" size="md" onClick={addFields}>
+                            Add
+                        </Button>
+                        
+                        <Button className="m-3" variant="primary" type="submit">
+                            Submit
+                        </Button>
+                    </Form>
+                </MainCol>
+            </Row>            
+        </div>
     )
 }
 
