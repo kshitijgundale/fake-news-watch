@@ -1,41 +1,46 @@
 import {React} from "react";
-import {Form, Button, Row} from 'react-bootstrap'
+import {Form, Button, Row, InputGroup} from 'react-bootstrap'
 import NavBar from "./NavBar"
 import MainCol from "./MainCol";
+import { useSelector, useDispatch } from 'react-redux'
 
-const NewsForm = ({inputFields, setInputFields, setCurrentPage, id, setId}) => {
+import { modifyNewsText, addNewsInput, removeNews, modifyNewsTag } from "../reducers/newsInputReducer";
+import { changePage } from "../reducers/currentPageReducer";
 
-    const handleFormChange = (id, event) => {
-        let data = [...inputFields]
-        data.forEach((element, index) => {
-            if(element.id === id) {
-                data[index].text = event.target.value;
-            }
-        });
-        console.log(event.target.value)
-        setInputFields(data)
+const NewsForm = () => {
+
+    const dispatch = useDispatch()
+    const newsInputs = useSelector(state => state.newsInputs)
+    const page = useSelector(state => state.page)
+
+    const handleInputChange = (id, event) => {
+        dispatch(modifyNewsText(
+            event.target.value,
+            id
+        ))
     }
 
     const addFields = () => {
-        let new_id = id+1
-        setId(new_id)
-        let newfield = { id: new_id, text: '' }
-        setInputFields([...inputFields, newfield])
+        dispatch(addNewsInput())
     }
 
     const removeFields = (id) => {
-        let data = [...inputFields]
-        const index = data.findIndex(element => element.id === id)
-        data.splice(index, 1)
-        setInputFields(data)
+        dispatch(removeNews(id))
     }
 
-    const onSubmit = (event) => {
+    const onFormSubmit = (event) => {
         event.preventDefault()
-        setCurrentPage("NewsChoice")
+        dispatch(changePage("PredictChoice"))
     }
 
-    return (
+    const handleTagChange = (event, id) => {
+        dispatch(modifyNewsTag(
+            event.target.value,
+            id
+        ))
+    }
+
+    return (page === "NewsForm" ?
         <div className="d-flex flex-column vh-100">
             <Row><NavBar></NavBar></Row>
             
@@ -47,36 +52,47 @@ const NewsForm = ({inputFields, setInputFields, setCurrentPage, id, setId}) => {
                         Add headline or URL of news you would like to verify. Any URL mentioning the news is valid e.g.(news article, facebook post, youtube videos)
                     </h3>
                 </MainCol>
-                <MainCol className="d-flex flex-column p-0 justify-content-center align-items-center" lg>
-                    <Form className="w-100" onSubmit={event => onSubmit(event)}>
+                <MainCol className="d-flex p-0 justify-content-center align-items-center" lg>
+                    <Form className="d-flex flex-column mb-3 justify-content-center align-items-center w-100" onSubmit={event => onFormSubmit(event)}>
                         {
-                            inputFields.map(({id, text})=>(
-                                <Form.Group className=" d-flex mb-3 justify-content-center align-items-center" controlId="news" key={id}>
+                            newsInputs.map(({id, text, tag})=>(
+                                <InputGroup className="d-flex flex-row m-2" style={{width: "70%"}} controlId="news" key={id}>
+                                    <Form.Select
+                                        className="m-1"
+                                        size="sm"
+                                        value={tag}
+                                        onChange={event => handleTagChange(event, id)}
+                                    >
+                                        <option>URL</option>
+                                        <option>HEADLINE</option>
+                                    </Form.Select>
                                     <Form.Control 
                                         className="m-1 w-50"
                                         type="text" 
                                         placeholder="Enter url or headline" 
                                         value={text} 
-                                        onChange={event => handleFormChange(id, event)}
+                                        onChange={event => handleInputChange(id, event)}
                                     />
                                     <Button className="m-1" variant="danger" size="sm" onClick={event => removeFields(id)}>
                                         Remove
                                     </Button>
-                                </Form.Group>
+                                </InputGroup>
                             ))
                         }
 
-                        <Button variant="outline-light" size="md" onClick={addFields}>
+                        <Button variant="outline-light m-3" size="md" onClick={addFields}>
                             Add
                         </Button>
                         
-                        <Button className="m-3" variant="primary" type="submit">
+                        <Button className="m-2" variant="primary" type="submit">
                             Submit
                         </Button>
                     </Form>
                 </MainCol>
             </Row>            
         </div>
+        :
+        null
     )
 }
 

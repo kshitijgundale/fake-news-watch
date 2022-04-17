@@ -3,11 +3,29 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux'
+import { createStore, combineReducers } from 'redux';
+
+import newsInputReducer from './reducers/newsInputReducer';
+import currentPageReducer from './reducers/currentPageReducer';
+import similarNewsReducer from './reducers/similarNewsReducer';
+import settingsReducer from './reducers/settingsReducer';
+import graphReducer from './reducers/graphReducer';
+
+const rootReducer = combineReducers({
+  newsInputs: newsInputReducer,
+  page: currentPageReducer,
+  similarNews: similarNewsReducer,
+  settings: settingsReducer,
+  graph: graphReducer,
+})
+
+const store = createStore(rootReducer)
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 

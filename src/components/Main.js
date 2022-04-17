@@ -14,7 +14,7 @@ const Main = () => (
       >
         <MainCol className="d-flex flex-column p-0 justify-content-center align-items-center" lg>
             <h2>Check veracity of news<br></br>with headline or a url</h2>
-            <Link to="/newsinput" style={{ textDecoration:'none', color:"white" }}>
+            <Link to="/predict" style={{ textDecoration:'none', color:"white" }}>
               <Button variant="outline-light" size="lg">Go</Button>
             </Link>
         </MainCol>

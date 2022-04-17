@@ -1,25 +1,25 @@
-import {React, useState, useEffect} from "react";
-import axios from 'axios'
+import {React, useState} from "react";
 import {Button, Row} from 'react-bootstrap'
 import NavBar from "./NavBar"
 import MainCol from "./MainCol";
 import NewsCard from "./NewsCard";
-import PlaceHolder from "./NewsPlaceholder";
+import { useDispatch, useSelector, useStore } from "react-redux";
+import axios from "axios";
 
-const NewsFeedback = ({setCurrentPage}) => {
+import { labelNews } from "../reducers/similarNewsReducer";
+import { changePage } from "../reducers/currentPageReducer";
+import { setGraph } from "../reducers/graphReducer";
 
-    const [news, setNews] = useState([])
+import { getNewsByTags, buildGraphData } from "../utils";
+
+const NewsFeedback = () => {
+
+    const dispatch = useDispatch()
+    const store = useStore()
+    const similarNews = useSelector(state => state.similarNews)
+    const page = useSelector(state => state.page)
+
     const [currNews, setCurrNews] = useState(0)
-    const [newsLabel, setNewsLabel] = useState([])
-
-    useEffect(()=>{
-        axios
-            .get("http://localhost:3001/news")
-            .then(response=>{
-                setNewsLabel(Array(response.data.length).fill("not-sure"))
-                setNews(response.data)
-            })
-    }, [])
 
     const handlePrevious = () => {
         setCurrNews(currNews-1)
@@ -29,17 +29,29 @@ const NewsFeedback = ({setCurrentPage}) => {
         setCurrNews(currNews+1)
     }
 
-    const handleRadioChange = (event) => {
-        let data = [...newsLabel]
-        data[currNews] = event.target.value
-        setNewsLabel(data)
+    const handleRadioChange = (id, event) => {
+        dispatch(labelNews(id, event.target.value))
     }
 
     const handleSubmit= () => {
-        setCurrentPage("Result")
+
+        const newsInputs = store.getState().newsInputs
+        const feedback = similarNews.reduce((r, e)=>{
+            if(e.label === "relevant") { r.push(e.url) }
+            return r
+        }, [])
+        const data = getNewsByTags(newsInputs, feedback)
+
+        axios.post("http://localhost:5000/fakenews/prediction", data)
+            .then(response=>{
+                let graph_data = response.data
+                dispatch(setGraph(buildGraphData(graph_data)))
+            })
+
+        dispatch(changePage("Result"))
     }
 
-    return (
+    return (page === "NewsFeedback" ?
         <div className="d-flex flex-column vh-100">
             <Row><NavBar></NavBar></Row>
             <Row
@@ -53,22 +65,25 @@ const NewsFeedback = ({setCurrentPage}) => {
                 </MainCol>
                 <MainCol className="d-flex flex-column p-0 justify-content-center align-items-center" lg>
                     {
-                        news.length > 0 ? (<NewsCard
-                            image={news[currNews].image}
-                            title={news[currNews].title}
-                            text={news[currNews].text}
-                            url={news[currNews].url}
+                        similarNews.length > 0 ? (<NewsCard
+                            id={similarNews[currNews].id}
+                            image={similarNews[currNews].image}
+                            title={similarNews[currNews].title}
+                            text={similarNews[currNews].text}
+                            url={similarNews[currNews].url}
                             handleRadioChange={handleRadioChange}
-                            value={newsLabel[currNews]}
-                        />) : <PlaceHolder />
+                            value={similarNews[currNews].label}
+                        />) : <div className="d-flex flex-column p-0 justify-content-center align-items-center" style={{fontSize: "25px"}}>Fetching related news...</div>
                     }
                     <div className="d-flex p-0 justify-content-center align-items-center">
                         <Button variant="light" size="md" className="m-3" disabled={currNews===0} onClick={handlePrevious}>Previous</Button>
-                        <Button variant="light" size="md" className="m-3" disabled={currNews===news.length-1} onClick={handleNext}>Next</Button>
+                        <Button variant="light" size="md" className="m-3" disabled={currNews===similarNews.length-1} onClick={handleNext}>Next</Button>
                     </div>
                 </MainCol>
             </Row>
         </div>
+        :
+        null
     )
 }
 
