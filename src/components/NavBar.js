@@ -21,7 +21,7 @@ const NavBar = () => (
           <Nav className="me-auto">
             <Link to="/" className="nav-link" style={{ textDecoration:'none'}}>Home</Link>
             <Nav.Link href="#link">HowItWorks</Nav.Link>
-            <Link to="/main" className="nav-link" style={{ textDecoration:'none'}}>GetStarted</Link>
+            <Link to="/predict" className="nav-link" style={{ textDecoration:'none'}}>GetStarted</Link>
             <Link to="/settings" className="nav-link" style={{ textDecoration:'none'}}>Settings</Link>
           </Nav>
         </Navbar.Collapse>

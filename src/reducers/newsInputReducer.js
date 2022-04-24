@@ -47,6 +47,8 @@ const newsInputReducer = (state=[{text: "", id: uuidv4(), tag: "URL"}], action) 
             })
         case "REMOVE_NEWS":
             return state.filter(elm => elm.id !== action.id)
+        case "RESET":
+            return [{text: "", id: uuidv4(), tag: "URL"}]
         default:
             return state
     }

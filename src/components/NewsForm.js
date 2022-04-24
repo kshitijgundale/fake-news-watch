@@ -3,6 +3,7 @@ import {Form, Button, Row, InputGroup} from 'react-bootstrap'
 import NavBar from "./NavBar"
 import MainCol from "./MainCol";
 import { useSelector, useDispatch } from 'react-redux'
+import PredictNavButtons from "./PredictNavButtons";
 
 import { modifyNewsText, addNewsInput, removeNews, modifyNewsTag } from "../reducers/newsInputReducer";
 import { changePage } from "../reducers/currentPageReducer";
@@ -43,7 +44,7 @@ const NewsForm = () => {
     return (page === "NewsForm" ?
         <div className="d-flex flex-column vh-100">
             <Row><NavBar></NavBar></Row>
-            
+            <Row><PredictNavButtons next="PredictChoice" previous=""></PredictNavButtons></Row>
             <Row
                 className="d-flex justify-content-center align-items-center h-100"
             >

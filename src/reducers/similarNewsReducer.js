@@ -25,6 +25,8 @@ const similarNewsReducer = (state=0, action) => {
                 if(elm.id === action.id){ elm.label = action.label }
                 return elm
             })
+        case "RESET":
+            return 0
         default:
             return state
     }

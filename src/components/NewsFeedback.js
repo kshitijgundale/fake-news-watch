@@ -3,6 +3,7 @@ import {Button, Row} from 'react-bootstrap'
 import NavBar from "./NavBar"
 import MainCol from "./MainCol";
 import NewsCard from "./NewsCard";
+import PredictNavButtons from "./PredictNavButtons";
 import { useDispatch, useSelector, useStore } from "react-redux";
 import axios from "axios";
 
@@ -54,6 +55,7 @@ const NewsFeedback = () => {
     return (page === "NewsFeedback" ?
         <div className="d-flex flex-column vh-100">
             <Row><NavBar></NavBar></Row>
+            <Row><PredictNavButtons next="Result" previous="PredictChoice"></PredictNavButtons></Row>
             <Row
                 className="d-flex justify-content-center align-items-center h-100"
             > 

@@ -5,8 +5,13 @@ import NavBar from "./NavBar";
 import MainCol from "./MainCol";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import { useSelector } from "react-redux";
+import PredicTNavButtons from './PredictNavButtons'
+import { Button } from "react-bootstrap";
+import { useDispatch } from 'react-redux'
 
 const Result = () => {
+
+  const dispatch = useDispatch()
 
   const page = useSelector(state => state.page);
   const graph = useSelector(state => state.graph);
@@ -30,12 +35,27 @@ const Result = () => {
     };
   };
 
+  const handleReset = () => {
+    dispatch({
+      'type': 'RESET'
+    })
+  }
+
   return page === "Result" ? (
     <div className="d-flex flex-column vh-100">
       <Row>
         <NavBar></NavBar>
       </Row>
-      <Row className="d-flex justify-content-center align-items-center h-100">
+      <Row className="d-flex flex-row justify-content-center align-items-center">
+        <PredicTNavButtons next="" previous="PredictChoice"></PredicTNavButtons>
+        <Button onClick={handleReset} className="w-25 m-2">Check For Another News</Button>
+      </Row>
+      {graph === null ? 
+        <div style={{color: "white", fontSize: "30px", margin: "50px"}} className="d-flex justify-content-center align-items-center">
+          No tweets found for given inputs. Try adding more headlines or urls.
+        </div>
+        :
+        <Row className="d-flex justify-content-center align-items-center h-100">
         <MainCol
           className="d-flex flex-column p-0 justify-content-center align-items-center"
           style={{
@@ -107,7 +127,7 @@ const Result = () => {
             )}
           </Col>
         </MainCol>
-      </Row>
+      </Row>}
     </div>
   ) : null;
 };

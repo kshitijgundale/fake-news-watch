@@ -2,6 +2,7 @@ import {React} from "react";
 import {Button, Row} from 'react-bootstrap'
 import NavBar from "./NavBar"
 import MainCol from "./MainCol";
+import PredictNavButtons from "./PredictNavButtons";
 import { useDispatch, useSelector, useStore } from "react-redux";
 
 import { changePage } from "../reducers/currentPageReducer";
@@ -19,7 +20,9 @@ const PredictChoice = () => {
 
     const handleGetScore = () => {
         const newsInputs = store.getState().newsInputs
-        const data = getNewsByTags(newsInputs, [])
+        const settings = store.getState().settings
+        console.log(settings)
+        const data = getNewsByTags(newsInputs, [], settings)
         
         axios.post("http://localhost:5000/fakenews/prediction", data)
             .then(response=>{
@@ -55,6 +58,7 @@ const PredictChoice = () => {
     return (page === "PredictChoice" ?
         <div className="d-flex flex-column vh-100">
             <Row><NavBar></NavBar></Row>
+            <Row><PredictNavButtons next={store.getState().similarNews === 0 ? "Result" : "NewsFeedback"} previous="NewsForm"></PredictNavButtons></Row>
             <Row
                 className="d-flex justify-content-center align-items-center h-100"
             >

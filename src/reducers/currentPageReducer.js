@@ -9,6 +9,8 @@ const currentPageReducer = (state="NewsForm", action) => {
     switch(action.type){
         case "CHANGE_PAGE":
             return action.page
+        case "RESET":
+            return 'NewsForm'
         default:
             return state
     }
