@@ -24,7 +24,7 @@ const PredictChoice = () => {
         console.log(settings)
         const data = getNewsByTags(newsInputs, [], settings)
         
-        axios.post("http://localhost:5000/fakenews/prediction", data)
+        axios.post("https://fakenewswatch-server.herokuapp.com/fakenews/prediction", data)
             .then(response=>{
                 let graph_data = response.data
                 dispatch(setGraph(buildGraphData(graph_data)))
@@ -47,7 +47,7 @@ const PredictChoice = () => {
         });
 
         axios
-            .post("http://localhost:5000/fakenews/recommend", data)
+            .post("https://fakenewswatch-server.herokuapp.com/recommend", data)
             .then((response)=>{
                 dispatch(setNews(response.data.news))
             })

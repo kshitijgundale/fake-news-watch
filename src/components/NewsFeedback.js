@@ -43,7 +43,7 @@ const NewsFeedback = () => {
         }, [])
         const data = getNewsByTags(newsInputs, feedback)
 
-        axios.post("http://localhost:5000/fakenews/prediction", data)
+        axios.post("https://fakenewswatch-server.herokuapp.com/prediction", data)
             .then(response=>{
                 let graph_data = response.data
                 dispatch(setGraph(buildGraphData(graph_data)))
