@@ -47,7 +47,7 @@ const PredictChoice = () => {
         });
 
         axios
-            .post("https://fakenewswatch-server.herokuapp.com/recommend", data)
+            .post("https://fakenewswatch-server.herokuapp.com/fakenews/recommend", data)
             .then((response)=>{
                 dispatch(setNews(response.data.news))
             })
