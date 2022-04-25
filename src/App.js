@@ -8,18 +8,27 @@ import {
   BrowserRouter as Router,
   Routes, Route
 } from "react-router-dom"
+import { useEffect } from "react";
+import axios from "axios";
 
-const App = () => (
-  <Container fluid>
-    <Router>
-      <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/main" element={<Main />} />
-          <Route path="/predict" element={<Predict />} />
-          <Route path="/settings" element={<Settings />} />
-      </Routes>
-    </Router>
-  </Container>
-);
+const App = () => {
+
+  useEffect(() => {
+    axios.get("https://fakenewswatch-server.herokuapp.com/fakenews/ping")
+  }, [])
+
+  return (
+    <Container fluid>
+      <Router>
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/main" element={<Main />} />
+            <Route path="/predict" element={<Predict />} />
+            <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </Router>
+    </Container>
+  )
+};
 
 export default App;
