@@ -37,11 +37,12 @@ const NewsFeedback = () => {
     const handleSubmit= () => {
 
         const newsInputs = store.getState().newsInputs
+        const settings = store.getState().settings
         const feedback = similarNews.reduce((r, e)=>{
             if(e.label === "relevant") { r.push(e.url) }
             return r
         }, [])
-        const data = getNewsByTags(newsInputs, feedback)
+        const data = getNewsByTags(newsInputs, feedback, settings)
 
         axios.post("https://fakenewswatch-server.herokuapp.com/fakenews/prediction", data)
             .then(response=>{
