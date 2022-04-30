@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Main from "./components/Main";
 import Predict from "./components/Predict";
 import Settings from "./components/Setting";
+import HowItWorks from "./components/HowItWorks";
 import {
   BrowserRouter as Router,
   Routes, Route
@@ -25,6 +26,7 @@ const App = () => {
             <Route path="/main" element={<Main />} />
             <Route path="/predict" element={<Predict />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/howitworks" element={<HowItWorks />} />
         </Routes>
       </Router>
     </Container>

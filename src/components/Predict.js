@@ -22,22 +22,6 @@ const Predict = () => {
             <PredictChoice></PredictChoice>
             <Result></Result>
             <NewsFeedback></NewsFeedback>
-            {/* {
-                ((page)=>{
-                    if(page === "NewsForm"){
-                        return <NewsForm></NewsForm>
-                    }
-                    else if(page === "PredictChoice"){
-                        return <PredictChoice></PredictChoice>
-                    }
-                    else if(page === "Result"){
-                        return <Result></Result>
-                    }
-                    else{
-                        return <NewsFeedback></NewsFeedback>
-                    }
-                })(page)
-            } */}
         </Row>
     )
 }

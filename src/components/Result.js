@@ -55,7 +55,7 @@ const Result = () => {
           No tweets found for given inputs. Try adding more headlines or urls.
         </div>
         :
-        <Row className="d-flex justify-content-center align-items-center h-100">
+        <Row className="d-flex justify-content-center align-items-center h-100 overflow-auto">
         <MainCol
           className="d-flex flex-column p-0 justify-content-center align-items-center"
           style={{

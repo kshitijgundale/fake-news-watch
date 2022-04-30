@@ -20,9 +20,11 @@ const Main = () => (
         </MainCol>
         <MainCol className="d-flex flex-column p-0 justify-content-center align-items-center" lg>
             <h2>How it works</h2>
-            <Button variant="outline-light" size="lg">
-              Go
-            </Button>
+            <Link to="/howitworks" style={{ textDecoration:'none', color:"white" }}>
+              <Button variant="outline-light" size="lg">
+                Go
+              </Button>
+            </Link>
         </MainCol>
       </Row>
     </div>
