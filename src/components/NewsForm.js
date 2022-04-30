@@ -46,7 +46,7 @@ const NewsForm = () => {
             <Row><NavBar></NavBar></Row>
             <Row><PredictNavButtons next="PredictChoice" previous=""></PredictNavButtons></Row>
             <Row
-                className="d-flex justify-content-center align-items-center h-100"
+                className="d-flex justify-content-center align-items-center h-100 overflow-auto"
             >
                 <MainCol className="d-flex flex-column p-0 justify-content-center align-items-center" lg>
                     <h3 style={{paddingRight: "50px", paddingLeft: "50px", paddingBottom: "20px"}}>
