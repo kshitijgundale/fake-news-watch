@@ -44,7 +44,7 @@ const NewsFeedback = () => {
         }, [])
         const data = getNewsByTags(newsInputs, feedback, settings)
 
-        axios.post(process.env.REACT_APP_SERVER_BASE_URL + "/fakenews/prediction", data)
+        axios.post("/api/fakenews/prediction", data)
             .then(response=>{
                 let graph_data = response.data
                 dispatch(setGraph(buildGraphData(graph_data)))

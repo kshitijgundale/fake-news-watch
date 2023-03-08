@@ -24,7 +24,7 @@ const PredictChoice = () => {
         console.log(settings)
         const data = getNewsByTags(newsInputs, [], settings)
         
-        axios.post(process.env.REACT_APP_SERVER_BASE_URL + "/fakenews/prediction", data)
+        axios.post("/api/fakenews/prediction", data)
             .then(response=>{
                 let graph_data = response.data
                 dispatch(setGraph(buildGraphData(graph_data)))
@@ -47,7 +47,7 @@ const PredictChoice = () => {
         });
 
         axios
-            .post(process.env.REACT_APP_SERVER_BASE_URL + "/fakenews/recommend", data)
+            .post("/api/fakenews/recommend", data)
             .then((response)=>{
                 dispatch(setNews(response.data.news))
             })
