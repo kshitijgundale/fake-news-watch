@@ -14,10 +14,6 @@ import axios from "axios";
 
 const App = () => {
 
-  useEffect(() => {
-    axios.get("https://fakenewswatch-server.herokuapp.com/fakenews/ping")
-  }, [])
-
   return (
     <Container fluid>
       <Router>
